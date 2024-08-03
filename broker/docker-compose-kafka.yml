@@ -69,22 +69,3 @@ services:
     environment:
       KAFKA_CLUSTERS_0_NAME: local
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
-
-
-  rabbitmq:
-    image: rabbitmq:3.11-management
-    restart: always
-    hostname: rabbitmq
-    container_name: rabbitmq
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-
-
-  nats:
-    image: nats:latest
-    hostname: nats
-    container_name: nats
-    ports:
-      - "4222:4222"
-      - "8222:8222"

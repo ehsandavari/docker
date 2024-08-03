@@ -1,0 +1,10 @@
+version: '3.9'
+
+services:
+  nats:
+    image: nats:latest
+    hostname: nats
+    container_name: nats
+    ports:
+      - "4222:4222"
+      - "8222:8222"
