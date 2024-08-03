@@ -12,3 +12,11 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     command: [ 'postgres', '-c', 'wal_level=logical' ]
+    networks:
+      - system_default
+
+
+networks:
+  system_default:
+    name: system_default
+    driver: bridge

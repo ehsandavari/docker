@@ -10,3 +10,11 @@ services:
       MYSQL_ROOT_PASSWORD: '123456'
     ports:
       - '3306:3306'
+    networks:
+      - system_default
+
+
+networks:
+  system_default:
+    name: system_default
+    driver: bridge

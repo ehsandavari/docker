@@ -6,23 +6,22 @@ services:
     hostname: zookeeper
     container_name: zookeeper
     ports:
-      - "2181:2181"
+      - '2181:2181'
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - system_default
 
 
   kafka:
     image: confluentinc/cp-kafka:latest
     hostname: kafka
     container_name: kafka
-    depends_on:
-      zookeeper:
-        condition: service_healthy
     ports:
-      - "29092:29092"
-      - "9092:9092"
-      - "9101:9101"
+      - '29092:29092'
+      - '9092:9092'
+      - '9101:9101'
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
@@ -35,6 +34,8 @@ services:
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: true
       KAFKA_JMX_PORT: 9101
       KAFKA_JMX_HOSTNAME: localhost
+    networks:
+      - system_default
 
 
   schema-registry:
@@ -42,30 +43,45 @@ services:
     hostname: schema-registry
     container_name: schema-registry
     ports:
-      - "8081:8081"
+      - '8081:8081'
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka:29092
       SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+    networks:
+      - system_default
 
 
   rest-proxy:
     image: confluentinc/cp-kafka-rest:latest
     ports:
-      - "8082:8082"
+      - '8082:8082'
     hostname: rest-proxy
     container_name: rest-proxy
     environment:
       KAFKA_REST_HOST_NAME: rest-proxy
       KAFKA_REST_BOOTSTRAP_SERVERS: kafka:29092
       KAFKA_REST_LISTENERS: http://0.0.0.0:8082
+    networks:
+      - system_default
 
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
+    hostname: kafka-ui
     container_name: kafka-ui
     ports:
-      - "8085:8080"
+      - '8085:8080'
     environment:
       KAFKA_CLUSTERS_0_NAME: local
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
+      KAFKA_CLUSTERS_1_NAME: snapp-trip@asia
+      KAFKA_CLUSTERS_1_BOOTSTRAPSERVERS: 172.25.1.70,172.25.1.71,192.172.25.1.73
+    networks:
+      - system_default
+
+
+networks:
+  system_default:
+    name: system_default
+    driver: bridge

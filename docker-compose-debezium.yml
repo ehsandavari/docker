@@ -7,7 +7,7 @@ services:
     container_name: debezium
     hostname: debezium
     ports:
-      - "8083:8083"
+      - '8083:8083'
     environment:
       BOOTSTRAP_SERVERS: kafka:29092
       GROUP_ID: 1
@@ -17,6 +17,8 @@ services:
       KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
       VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
       ENABLE_DEBEZIUM_SCRIPTING: true
+    networks:
+      - system_default
 
 
   debezium-ui:
@@ -25,6 +27,14 @@ services:
     container_name: debezium-ui
     hostname: debezium-ui
     ports:
-      - "8080:8080"
+      - '8080:8080'
     environment:
       KAFKA_CONNECT_URIS: http://debezium:8083
+    networks:
+      - system_default
+
+
+networks:
+  system_default:
+    name: system_default
+    driver: bridge

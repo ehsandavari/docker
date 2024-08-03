@@ -6,5 +6,13 @@ services:
     hostname: nats
     container_name: nats
     ports:
-      - "4222:4222"
-      - "8222:8222"
+      - '4222:4222'
+      - '8222:8222'
+    networks:
+      - system_default
+
+
+networks:
+  system_default:
+    name: system_default
+    driver: bridge
