@@ -1,3 +1,0 @@
-[submodule "elk"]
-	path = monitoring/elk
-	url = git@github.com:deviantony/docker-elk.git
