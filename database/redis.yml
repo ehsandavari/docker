@@ -7,6 +7,7 @@ services:
     container_name: redis
     ports:
       - '6379:6379'
+    restart: always
     networks:
       - system_default
 
